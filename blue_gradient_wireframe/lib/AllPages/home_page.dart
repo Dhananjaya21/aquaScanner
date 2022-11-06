@@ -3,6 +3,7 @@ import 'package:blue_gradient_wireframe/AllPages/fish_feeding.dart';
 import 'package:blue_gradient_wireframe/AllPages/login_page.dart';
 import 'package:blue_gradient_wireframe/AllPages/signup_page.dart';
 import 'package:blue_gradient_wireframe/AllPages/water_quality.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -164,11 +165,13 @@ class _HomePageState extends State<HomePage> {
                     style: ButtonStyle(
                       foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const LoginPage()),
                       );
+                      print(FirebaseAuth.instance.currentUser?.uid);
                     },
                     child: const Text(
                         'Logout',

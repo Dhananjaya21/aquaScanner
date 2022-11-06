@@ -1,18 +1,62 @@
 import 'package:blue_gradient_wireframe/AllPages/login_page.dart';
 import 'package:blue_gradient_wireframe/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class SignupPage extends StatelessWidget {
-  SignupPage({Key? key}) : super(key: key);
+import 'home_page.dart';
 
+class SignupPage extends StatefulWidget {
+  const SignupPage({Key? key}) : super(key: key);
+
+  @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
   TextEditingController fullNameTextEditingController = TextEditingController();
+
   TextEditingController emailTextEditingController = TextEditingController();
+
   TextEditingController userNameTextEditingController = TextEditingController();
+
   TextEditingController passwordTextEditingController = TextEditingController();
 
+  registerNewUser() async {
+
+
+    final User? firebaseUser = (await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+      email: emailTextEditingController.text.trim(),
+      password: passwordTextEditingController.text.trim(),
+    ).catchError((msg) {
+      Fluttertoast.showToast(msg: "Error" + msg.toString());
+    })).user;
+
+    if (firebaseUser != null) {
+      Map userMap = {
+        "id": firebaseUser.uid,
+        "username": fullNameTextEditingController.text.trim(),
+        "email": emailTextEditingController.text.trim(),
+        "phone": userNameTextEditingController.text.trim(),
+        "PH value":"5",
+        "water visibility":"not clear",
+        "TDS value":"56",
+      };
+      DatabaseReference userRef =
+      FirebaseDatabase.instance.ref().child("users");
+      userRef.child(firebaseUser.uid).set(userMap);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (c) => const HomePage(),
+        ),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,7 +153,7 @@ class SignupPage extends StatelessWidget {
                   ),
 
                   onPressed: (){
-                    registerNewUser(context);
+                    registerNewUser();
                   },
                 ),
               ),
@@ -132,24 +176,5 @@ class SignupPage extends StatelessWidget {
         ),
       ),
     );
-  }
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-
-  void registerNewUser(BuildContext context) async{
-    final User? firebaseUser = (await _firebaseAuth
-    .createUserWithEmailAndPassword(
-        email: emailTextEditingController.text,
-        password: passwordTextEditingController.text).catchError((errMsg){
-          Fluttertoast.showToast(msg: "error");
-    })).user;
-
-    Map UserDataMap = {
-      "name":fullNameTextEditingController.text.trim(),
-      "username":fullNameTextEditingController.text.trim(),
-      "email": emailTextEditingController.text.trim(),
-    };
-
-    usersRef.child(firebaseUser!.uid).set(UserDataMap);
-
   }
 }

@@ -1,3 +1,6 @@
+import 'package:blue_gradient_wireframe/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -6,11 +9,13 @@ import 'home_page.dart';
 class WaterQuality extends StatefulWidget {
   const WaterQuality({Key? key}) : super(key: key);
 
+
   @override
   _WaterQualityState createState() => _WaterQualityState();
 }
 
 class _WaterQualityState extends State<WaterQuality> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +53,7 @@ class _WaterQualityState extends State<WaterQuality> {
               Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children:   [
-                    SizedBox(width: 15.0,),
+                    const SizedBox(width: 15.0,),
 
                     Container(
                       width: 150.0,
@@ -81,10 +86,10 @@ class _WaterQualityState extends State<WaterQuality> {
                         borderRadius: BorderRadius.circular(14.0),
                         color: const Color(0xFF002352),
                       ),
-                      child: const Center(
+                      child:  Center(
                         child: Text(
-                          '7',
-                          style: TextStyle(
+                          "7",
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Arial',
                             fontSize: 18,
@@ -94,7 +99,8 @@ class _WaterQualityState extends State<WaterQuality> {
                           textAlign: TextAlign.center,
                         ),
                       ),
-                    ),                    SizedBox(width: 15.0,),
+                    ),
+                    const SizedBox(width: 15.0,),
 
                   ]
               ),
@@ -102,7 +108,7 @@ class _WaterQualityState extends State<WaterQuality> {
               Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children:   [
-                    SizedBox(width: 15.0,),
+                    const SizedBox(width: 15.0,),
 
                     Container(
                       width: 150.0,
@@ -113,7 +119,7 @@ class _WaterQualityState extends State<WaterQuality> {
                       ),
                       child: const Center(
                         child: Text(
-                          'WATER\nVISIBILITY VALUE',
+                          'WATER VISIBILITY',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Arial',
@@ -137,7 +143,7 @@ class _WaterQualityState extends State<WaterQuality> {
                       ),
                       child: const Center(
                         child: Text(
-                          '3',
+                          'clear',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Arial',
@@ -149,7 +155,7 @@ class _WaterQualityState extends State<WaterQuality> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 15.0,),
+                    const SizedBox(width: 15.0,),
 
                   ]
               ),
@@ -157,7 +163,7 @@ class _WaterQualityState extends State<WaterQuality> {
               Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children:   [
-                    SizedBox(width: 15.0,),
+                    const SizedBox(width: 15.0,),
                     Container(
                       width: 150.0,
                       height: 60.0,
@@ -203,7 +209,7 @@ class _WaterQualityState extends State<WaterQuality> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 15.0,),
+                    const SizedBox(width: 15.0,),
                   ]
               ),
               const SizedBox(height: 260.0,),
