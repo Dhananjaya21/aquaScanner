@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:blue_gradient_wireframe/AllPages/fish_feeding.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -37,6 +39,17 @@ class _DiseaseIdentificationPageState extends State<DiseaseIdentificationPage> {
       print(e);
       return "an error";
     }
+  }
+
+  Future<dynamic> setDatabase() async {
+    Map<String, dynamic> data = {
+      "user_id": current_user!.uid,
+      "image_url": url
+    };
+    return await FirebaseFirestore.instance
+        .collection('images')
+        .doc()
+        .set(data);
   }
 
   Future<String> getImageUrl(String name) async {
@@ -200,9 +213,11 @@ class _DiseaseIdentificationPageState extends State<DiseaseIdentificationPage> {
                                           String path = image!.path;
                                           String download_url =
                                               await uploadImage(name, path);
+
                                           setState(() {
                                             url = download_url;
                                           });
+                                          setDatabase();
                                           print(url);
                                         }
                                       },
@@ -226,6 +241,7 @@ class _DiseaseIdentificationPageState extends State<DiseaseIdentificationPage> {
                                           setState(() {
                                             url = download_url;
                                           });
+                                          await setDatabase();
                                           print(url);
                                         }
                                       },
